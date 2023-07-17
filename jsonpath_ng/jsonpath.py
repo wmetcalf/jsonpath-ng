@@ -220,6 +220,9 @@ class Root(JSONPath):
     def __eq__(self, other):
         return isinstance(other, Root)
 
+    def __hash__(self):
+        return hash('$')
+
 
 class This(JSONPath):
     """
@@ -243,6 +246,9 @@ class This(JSONPath):
 
     def __eq__(self, other):
         return isinstance(other, This)
+
+    def __hash__(self):
+        return hash('this')
 
 
 class Child(JSONPath):
@@ -302,6 +308,9 @@ class Child(JSONPath):
     def __repr__(self):
         return '%s(%r, %r)' % (self.__class__.__name__, self.left, self.right)
 
+    def __hash__(self):
+        return hash((self.left, self.right))
+
 
 class Parent(JSONPath):
     """
@@ -322,6 +331,9 @@ class Parent(JSONPath):
 
     def __repr__(self):
         return 'Parent()'
+
+    def __hash__(self):
+        return hash('parent')
 
 
 class Where(JSONPath):
@@ -356,6 +368,9 @@ class Where(JSONPath):
 
     def __eq__(self, other):
         return isinstance(other, Where) and other.left == self.left and other.right == self.right
+
+    def __hash__(self):
+        return hash((self.left, self.right))
 
 class Descendants(JSONPath):
     """
@@ -469,6 +484,9 @@ class Descendants(JSONPath):
     def __repr__(self):
         return '%s(%r, %r)' % (self.__class__.__name__, self.left, self.right)
 
+    def __hash__(self):
+        return hash((self.left, self.right))
+
 
 class Union(JSONPath):
     """
@@ -490,6 +508,12 @@ class Union(JSONPath):
     def find(self, data):
         return self.left.find(data) + self.right.find(data)
 
+    def __eq__(self, other):
+        return isinstance(other, Union) and self.left == other.left and self.right == other.right
+
+    def __hash__(self):
+        return hash((self.left, self.right))
+
 class Intersect(JSONPath):
     """
     JSONPath for bits that match *both* patterns.
@@ -510,6 +534,12 @@ class Intersect(JSONPath):
 
     def find(self, data):
         raise NotImplementedError()
+
+    def __eq__(self, other):
+        return isinstance(other, Intersect) and self.left == other.left and self.right == other.right
+
+    def __hash__(self):
+        return hash((self.left, self.right))
 
 
 class Fields(JSONPath):
@@ -596,6 +626,9 @@ class Fields(JSONPath):
     def __eq__(self, other):
         return isinstance(other, Fields) and tuple(self.fields) == tuple(other.fields)
 
+    def __hash__(self):
+        return hash(tuple(self.fields))
+
 
 class Index(JSONPath):
     """
@@ -661,6 +694,9 @@ class Index(JSONPath):
         if len(value) <= self.index:
             pad = self.index - len(value) + 1
             value += [{} for __ in range(pad)]
+
+    def __hash__(self):
+        return hash(self.index)
 
 
 class Slice(JSONPath):
@@ -740,6 +776,9 @@ class Slice(JSONPath):
 
     def __eq__(self, other):
         return isinstance(other, Slice) and other.start == self.start and self.end == other.end and other.step == self.step
+
+    def __hash__(self):
+        return hash((self.start, self.end, self.step))
 
 
 def _create_list_key(dict_):

@@ -183,6 +183,7 @@ class TestJsonPath(unittest.TestCase):
 
         for string, data, target in test_cases:
             print('parse("%s").find(%s).paths =?= %s' % (string, data, target))
+            assert hash(parse(string)) == hash(parse(string))
             result = parse(string).find(data)
             if isinstance(target, list):
                 assert [str(r.full_path) for r in result] == target
