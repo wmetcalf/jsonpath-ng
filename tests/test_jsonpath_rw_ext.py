@@ -21,7 +21,6 @@ Tests for `jsonpath_ng_ext` module.
 
 from jsonpath_ng import jsonpath  # For setting the global auto_id_field flag
 from oslotest import base
-from six import moves
 
 from jsonpath_ng.ext import parser
 
@@ -416,7 +415,7 @@ class TestJsonPath(base.BaseTestCase):
 
     def test_slice_value(self):
         self.check_cases([('[*]', [1, 2, 3], [1, 2, 3]),
-                          ('[*]', moves.range(1, 4), [1, 2, 3]),
+                          ('[*]', range(1, 4), [1, 2, 3]),
                           ('[1:]', [1, 2, 3, 4], [2, 3, 4]),
                           ('[:2]', [1, 2, 3, 4], [1, 2])])
 

@@ -23,7 +23,7 @@ setuptools.setup(
     },
     test_suite='tests',
     install_requires=[
-        'ply', 'six'
+        'ply'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
