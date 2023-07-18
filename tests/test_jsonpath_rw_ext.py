@@ -22,13 +22,23 @@ Tests for `jsonpath_ng_ext` module.
 from jsonpath_ng import jsonpath  # For setting the global auto_id_field flag
 from oslotest import base
 from six import moves
-import testscenarios
 
 from jsonpath_ng.ext import parser
 
 
-class Testjsonpath_ng_ext(testscenarios.WithScenarios,
-                          base.BaseTestCase):
+# Example from https://docs.pytest.org/en/7.1.x/example/parametrize.html#a-quick-port-of-testscenarios
+def pytest_generate_tests(metafunc):
+    idlist = []
+    argvalues = []
+    for scenario in metafunc.cls.scenarios:
+        idlist.append(scenario[0])
+        items = scenario[1].items()
+        argnames = [x[0] for x in items]
+        argvalues.append([x[1] for x in items])
+    metafunc.parametrize(argnames, argvalues, ids=idlist, scope="class")
+
+
+class Testjsonpath_ng_ext:
     scenarios = [
         ('sorted_list', dict(string='objects.`sorted`',
                              data={'objects': ['alpha', 'gamma', 'beta']},
@@ -334,17 +344,17 @@ class Testjsonpath_ng_ext(testscenarios.WithScenarios,
         )),
     ]
 
-    def test_fields_value(self):
+    def test_fields_value(self, string, data, target):
         jsonpath.auto_id_field = None
-        result = parser.parse(self.string, debug=True).find(self.data)
-        if isinstance(self.target, list):
-            self.assertEqual(self.target, [r.value for r in result])
-        elif isinstance(self.target, set):
-            self.assertEqual(self.target, set([r.value for r in result]))
-        elif isinstance(self.target, (int, float)):
-            self.assertEqual(self.target, result[0].value)
+        result = parser.parse(string, debug=True).find(data)
+        if isinstance(target, list):
+            assert target == [r.value for r in result]
+        elif isinstance(target, set):
+            assert target == set([r.value for r in result])
+        elif isinstance(target, (int, float)):
+            assert target == result[0].value
         else:
-            self.assertEqual(self.target, result[0].value)
+            assert target == result[0].value
 
 # NOTE(sileht): copy of tests/test_jsonpath.py
 # to ensure we didn't break jsonpath_ng
