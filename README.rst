@@ -187,6 +187,8 @@ Extras
 Extensions
 ----------
 
+To use the extensions below you must import from `jsonpath_ng.ext`.
+
 +--------------+-----------------------------------------------+
 | name         | Example                                       |
 +==============+===============================================+
