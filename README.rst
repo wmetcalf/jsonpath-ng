@@ -223,7 +223,7 @@ To use the extensions below you must import from `jsonpath_ng.ext`.
 | (-+*/)       | - ``$.foo * 12``                              |
 |              | - ``$.objects[*].cow + $.objects[*].cat``     |
 +--------------+-----------------------------------------------+
--
+
 About arithmetic and string
 ---------------------------
 
