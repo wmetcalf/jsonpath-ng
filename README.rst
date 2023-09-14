@@ -50,6 +50,23 @@ Basic examples:
     >>> [str(match.full_path) for match in jsonpath_expr.find({'foo': [{'baz': 1}, {'baz': 2}]})]
     ['foo.[0].baz', 'foo.[1].baz']
 
+    # Modifying values matching the path
+    >>> jsonpath_expr.update( {'foo': [{'baz': 1}, {'baz': 2}]}, 3)
+    {'foo': [{'baz': 3}, {'baz': 3}]}
+
+    # Modifying one of the values matching th path
+    >>> matches = jsonpath_expr.find({'foo': [{'baz': 1}, {'baz': 2}]})
+    >>> matches[0].full_path.update( {'foo': [{'baz': 1}, {'baz': 2}]}, 3)
+    {'foo': [{'baz': 3}, {'baz': 2}]}
+
+    # Removing all values matching a path
+    >>> jsonpath_expr.filter(lambda d: True, {'foo': [{'baz': 1}, {'baz': 2}]})
+    {'foo': [{}, {}]}
+
+    # Removing values containing particular data matching path
+    >>> jsonpath_expr.filter(lambda d: d == 2, {'foo': [{'baz': 1}, {'baz': 2}]})
+    {'foo': [{'baz': 1}, {}]}
+
     # And this can be useful for automatically providing ids for bits of data that do not have them (currently a global switch)
     >>> jsonpath.auto_id_field = 'id'
     >>> [match.value for match in parse('foo[*].id').find({'foo': [{'id': 'bizzle'}, {'baz': 3}]})]
