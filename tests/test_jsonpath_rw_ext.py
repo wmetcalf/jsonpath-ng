@@ -66,6 +66,13 @@ class Testjsonpath_ng_ext:
                          data={'objects': ['alpha', 'gamma']},
                          target=5)),
 
+        ('keys_list', dict(string='objects.`keys`',
+                          data={'objects': ['alpha', 'gamma', 'beta']},
+                          target=[])),
+        ('keys_dict', dict(string='objects.`keys`',
+                          data={'objects': {'cow': 'moo', 'cat': 'neigh'}},
+                          target=['cow','cat'])),
+
         ('filter_exists_syntax1', dict(string='objects[?cow]',
                                        data={'objects': [{'cow': 'moo'},
                                                          {'cat': 'neigh'}]},
