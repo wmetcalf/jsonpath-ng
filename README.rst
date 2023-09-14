@@ -54,7 +54,7 @@ Basic examples:
     >>> jsonpath_expr.update( {'foo': [{'baz': 1}, {'baz': 2}]}, 3)
     {'foo': [{'baz': 3}, {'baz': 3}]}
 
-    # Modifying one of the values matching th path
+    # Modifying one of the values matching the path
     >>> matches = jsonpath_expr.find({'foo': [{'baz': 1}, {'baz': 2}]})
     >>> matches[0].full_path.update( {'foo': [{'baz': 1}, {'baz': 2}]}, 3)
     {'foo': [{'baz': 3}, {'baz': 2}]}
