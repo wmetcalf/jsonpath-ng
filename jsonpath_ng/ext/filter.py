@@ -25,7 +25,7 @@ OPERATOR_MAP = {
     '<': operator.lt,
     '>=': operator.ge,
     '>': operator.gt,
-    '=~': lambda a, b: True if re.search(b, a) else False,
+    '=~': lambda a, b: True if isinstance(a, str) and re.search(b, a) else False,
 }
 
 
