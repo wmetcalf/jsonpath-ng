@@ -24,10 +24,10 @@ lint:
 
 test: clean
 	@echo "$(OK_COLOR)==> Runnings tests ...$(NO_COLOR)"
-	@py.test -s -v --capture sys --cov jsonpath_ng --cov-report term-missing
+	@pytest -s -v --capture sys --cov jsonpath_ng --cov-report term-missing
 
 coverage:
-	@coverage run --source jsonpath_ng -m py.test
+	@coverage run --source jsonpath_ng -m pytest
 	@coverage report
 
 tag:
