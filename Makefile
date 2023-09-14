@@ -47,7 +47,7 @@ history:
 
 clean:
 	@echo "$(OK_COLOR)==> Cleaning up files that are already in .gitignore...$(NO_COLOR)"
-	@for pattern in `cat .gitignore`; do find . -name "*/$$pattern" -delete; done
+	@git clean -Xf
 
 publish:
 	@echo "$(OK_COLOR)==> Releasing package ...$(NO_COLOR)"
