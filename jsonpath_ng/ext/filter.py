@@ -12,7 +12,10 @@
 # under the License.
 
 import operator
-import re
+try:
+    import re2 as re
+except:
+    import re
 
 from .. import JSONPath, DatumInContext, Index
 

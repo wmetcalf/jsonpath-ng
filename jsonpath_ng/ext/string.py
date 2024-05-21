@@ -11,7 +11,11 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import re
+try:
+    import re2 as re
+except:
+    import re
+
 from .. import DatumInContext, This
 
 
